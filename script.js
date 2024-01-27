@@ -1,3 +1,5 @@
+let isGradient = true;
+
 function createGrid(size) {
     const container = document.getElementById('grid-container');
     container.innerHTML = ''; // Clear existing grid if any
@@ -9,12 +11,29 @@ function createGrid(size) {
         square.style.width = `calc(960px / ${size})`;
         square.style.height = `calc(960px / ${size})`;
         
-        // Add event listener for the 'mouseenter' event
+        square.dataset.darkness = 0;
+
         square.addEventListener('mouseenter', () => {
-            square.style.backgroundColor = 'black'; // Change to desired color
+            if(isGradient){
+                let darkness = parseInt(square.dataset.darkness, 10);
+            if (darkness < 10) {
+                darkness += 1; // Increase darkness level by 1
+                square.dataset.darkness = darkness;
+                square.style.backgroundColor = `rgba(0, 0, 0, ${darkness * 0.1})`; // Update background color
+            }
+            } else {
+                square.style.backgroundColor = 'black';
+            }
+            
         });
         container.appendChild(square);
     }
+}
+
+function toggleMode(){
+    isGradient = !isGradient;
+    document.getElementById('toogleModeButton').textContent = isGradient ? "Toggle to Solid Color" : "Toggle to Gradient";
+    createGrid(16);
 }
 
 document.getElementById('gridSizeButton').addEventListener('click', () => {
@@ -23,5 +42,6 @@ document.getElementById('gridSizeButton').addEventListener('click', () => {
     createGrid(newSize);
 })
 
+document.getElementById('toggleModeButton').addEventListener('click', toggleMode);
 
 createGrid(16);
