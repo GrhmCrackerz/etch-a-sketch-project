@@ -10,3 +10,18 @@
     border: 1px solid black;
     box-sizing: border-box;
 }
+
+h1{
+    text-align: center;
+}
+
+.container {
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+    margin: 10px;
+}
+
+.grid-container{
+    display: flex;
+}
